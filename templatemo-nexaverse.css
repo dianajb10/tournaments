@@ -34,6 +34,17 @@ body {
 	min-height: 100vh;
 }
 
+/* Global Links */
+a {
+	color: var(--primary);
+	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+a:hover {
+	color: var(--secondary);
+}
+
 /* Ambient Background */
 .ambient-bg {
 	position: fixed;
@@ -2071,11 +2082,4 @@ body {
 	}
 }
 
-/* Hide all sections except introduction */
-#services,
-#gallery,
-#testimonials,
-#about,
-#contact {
-	display: none;
-}
+/* Hide all sections that are not in use */
