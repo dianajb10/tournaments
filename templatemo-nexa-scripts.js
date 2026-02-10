@@ -247,3 +247,75 @@ function filterGallery(category, btn) {
       }
    });
 }
+
+// Navigation Bar Functionality
+const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+const navMenu = document.querySelector('.nav-menu');
+const navLinks = document.querySelectorAll('.nav-link');
+
+// Mobile Menu Toggle
+if (mobileMenuToggle) {
+   mobileMenuToggle.addEventListener('click', () => {
+      mobileMenuToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+   });
+}
+
+// Close mobile menu and scroll to section
+navLinks.forEach(link => {
+   link.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Remove active class from all links
+      navLinks.forEach(l => l.classList.remove('active'));
+      
+      // Add active class to clicked link
+      link.classList.add('active');
+      
+      // Close mobile menu
+      if (mobileMenuToggle && navMenu.classList.contains('active')) {
+         mobileMenuToggle.classList.remove('active');
+         navMenu.classList.remove('active');
+      }
+      
+      // Handle navigation
+      const href = link.getAttribute('href');
+      const sectionId = href.replace('#', '');
+      const section = document.getElementById(sectionId);
+      if (section) {
+         section.scrollIntoView({ behavior: 'smooth' });
+      }
+   });
+});
+
+// Update active nav link on scroll
+window.addEventListener('scroll', () => {
+   let current = '';
+   
+   // Check each section's position
+   const sections = [
+      { id: 'hero', offset: 200 },
+      { id: 'register', offset: 100 },
+      { id: 'tournament1', offset: 100 },
+      { id: 'tournament2', offset: 100 }
+   ];
+
+   sections.forEach(sec => {
+      const element = document.getElementById(sec.id);
+      if (element) {
+         const rect = element.getBoundingClientRect();
+         if (rect.top <= sec.offset && rect.bottom > sec.offset) {
+            current = sec.id;
+         }
+      }
+   });
+
+   // Update active link
+   navLinks.forEach(link => {
+      link.classList.remove('active');
+      const href = link.getAttribute('href').replace('#', '');
+      if (href === current) {
+         link.classList.add('active');
+      }
+   });
+}, { passive: true });
